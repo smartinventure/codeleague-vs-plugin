@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+  <Include href="KnownImageIds.vsct" />
+
+  <Commands package="guidPersistentChangesPackage">
+    <Buttons>
+      <!-- View > Other Windows > CodeLeague – Persistent Changes -->
+      <Button guid="guidPersistentChangesCmdSet" id="cmdidShowPersistentChanges" priority="0x0100" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1" />
+        <Icon guid="ImageCatalogGuid" id="History" />
+        <CommandFlag>IconIsMoniker</CommandFlag>
+        <Strings>
+          <ButtonText>CodeLeague – Persistent Changes</ButtonText>
+          <CommandName>ShowPersistentChanges</CommandName>
+          <CanonicalName>.CodeLeague.PersistentChanges</CanonicalName>
+          <LocCanonicalName>.CodeLeague.PersistentChanges</LocCanonicalName>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="guidPersistentChangesPackage" value="{dcd2567d-32e1-4166-9db6-c90c164f5928}" />
+    <GuidSymbol name="guidPersistentChangesCmdSet" value="{3266175a-67ff-406d-81ef-21e710ecb8d3}">
+      <IDSymbol name="cmdidShowPersistentChanges" value="0x0100" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>

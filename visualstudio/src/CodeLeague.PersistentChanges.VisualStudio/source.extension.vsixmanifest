@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="CodeLeague.PersistentChanges.c77b29de-10fa-4f05-a121-c921c53994e9" Version="0.1.0" Language="en-US" Publisher="smartinventure" />
+    <DisplayName>CodeLeague – Persistent Changes</DisplayName>
+    <Description xml:space="preserve">Keeps a clickable list of the files you are working on. Unlike Git Changes, the list survives commits, pushes and restarts until you reset it, so you can commit and push daily without losing your overview. Tracked per repository and branch.</Description>
+    <MoreInfo>https://github.com/smartinventure/codeleague-vs-plugin</MoreInfo>
+    <License>LICENSE</License>
+    <Icon>Resources\Icon.png</Icon>
+    <Tags>git, changes, codeleague, working set</Tags>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,19.0)">
+      <ProductArchitecture>amd64</ProductArchitecture>
+    </InstallationTarget>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,19.0)">
+      <ProductArchitecture>arm64</ProductArchitecture>
+    </InstallationTarget>
+  </Installation>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+  </Assets>
+</PackageManifest>

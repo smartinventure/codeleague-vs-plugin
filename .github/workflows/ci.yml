@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  vscode:
+    name: VS Code extension (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    defaults:
+      run:
+        working-directory: vscode
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: vscode/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - name: Integration test (real VS Code)
+        if: runner.os == 'Linux'
+        run: xvfb-run -a npm run test:integration
+      - name: Integration test (real VS Code)
+        if: runner.os == 'Windows'
+        run: npm run test:integration
+      - run: npm run package
+        if: runner.os == 'Windows'
+      - uses: actions/upload-artifact@v4
+        if: runner.os == 'Windows'
+        with:
+          name: codeleague-persistent-changes-vscode
+          path: vscode/codeleague-persistent-changes.vsix
+
+  visualstudio:
+    name: Visual Studio extension
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: visualstudio
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Core tests
+        run: dotnet test tests/CodeLeague.PersistentChanges.Core.Tests
+      - uses: microsoft/setup-msbuild@v2
+      - name: Build VSIX
+        run: msbuild src/CodeLeague.PersistentChanges.VisualStudio/CodeLeague.PersistentChanges.VisualStudio.csproj -restore -p:Configuration=Release -v:minimal
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codeleague-persistent-changes-visualstudio
+          path: visualstudio/src/CodeLeague.PersistentChanges.VisualStudio/bin/Release/net472/CodeLeague.PersistentChanges.VisualStudio.vsix

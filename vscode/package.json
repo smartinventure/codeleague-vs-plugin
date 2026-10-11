@@ -1,0 +1,277 @@
+{
+  "name": "codeleague-persistent-changes",
+  "displayName": "CodeLeague – Persistent Changes",
+  "description": "Keeps a clickable list of the files you are working on – it survives commits, pushes and restarts until you reset it.",
+  "version": "0.1.0",
+  "publisher": "smartinventure",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smartinventure/codeleague-vs-plugin.git"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "SCM Providers",
+    "Other"
+  ],
+  "keywords": [
+    "git",
+    "changes",
+    "codeleague",
+    "working set"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "views": {
+      "scm": [
+        {
+          "id": "codeleague.persistentChanges",
+          "name": "CodeLeague – Persistent Changes",
+          "icon": "$(history)",
+          "contextualTitle": "CodeLeague"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "codeleague.persistentChanges.reset",
+        "title": "Reset Tracking",
+        "category": "CodeLeague",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "codeleague.persistentChanges.refresh",
+        "title": "Refresh",
+        "category": "CodeLeague",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "codeleague.persistentChanges.viewAsTree",
+        "title": "View as Tree",
+        "category": "CodeLeague",
+        "icon": "$(list-tree)"
+      },
+      {
+        "command": "codeleague.persistentChanges.viewAsList",
+        "title": "View as List",
+        "category": "CodeLeague",
+        "icon": "$(list-flat)"
+      },
+      {
+        "command": "codeleague.persistentChanges.open",
+        "title": "Open File",
+        "category": "CodeLeague",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "codeleague.persistentChanges.openChanges",
+        "title": "Open Changes",
+        "category": "CodeLeague",
+        "icon": "$(git-compare)"
+      },
+      {
+        "command": "codeleague.persistentChanges.remove",
+        "title": "Remove from List",
+        "category": "CodeLeague",
+        "icon": "$(close)"
+      },
+      {
+        "command": "codeleague.persistentChanges.revealInExplorer",
+        "title": "Reveal in Explorer View",
+        "category": "CodeLeague"
+      },
+      {
+        "command": "codeleague.persistentChanges.revealInOS",
+        "title": "Reveal in File Explorer",
+        "category": "CodeLeague"
+      },
+      {
+        "command": "codeleague.persistentChanges.copyPath",
+        "title": "Copy Path",
+        "category": "CodeLeague"
+      },
+      {
+        "command": "codeleague.persistentChanges.copyRelativePath",
+        "title": "Copy Relative Path",
+        "category": "CodeLeague"
+      },
+      {
+        "command": "codeleague.persistentChanges.click",
+        "title": "Open Tracked File",
+        "category": "CodeLeague"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "codeleague.persistentChanges.reset",
+          "when": "view == codeleague.persistentChanges",
+          "group": "navigation@1"
+        },
+        {
+          "command": "codeleague.persistentChanges.viewAsList",
+          "when": "view == codeleague.persistentChanges && codeleague.persistentChanges.viewMode == tree",
+          "group": "navigation@2"
+        },
+        {
+          "command": "codeleague.persistentChanges.viewAsTree",
+          "when": "view == codeleague.persistentChanges && codeleague.persistentChanges.viewMode != tree",
+          "group": "navigation@2"
+        },
+        {
+          "command": "codeleague.persistentChanges.refresh",
+          "when": "view == codeleague.persistentChanges",
+          "group": "navigation@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "codeleague.persistentChanges.reset",
+          "when": "view == codeleague.persistentChanges && viewItem == repository",
+          "group": "inline"
+        },
+        {
+          "command": "codeleague.persistentChanges.reset",
+          "when": "view == codeleague.persistentChanges && viewItem == repository",
+          "group": "1_tracking"
+        },
+        {
+          "command": "codeleague.persistentChanges.openChanges",
+          "when": "view == codeleague.persistentChanges && viewItem =~ /^file\\.dirty/",
+          "group": "inline@1"
+        },
+        {
+          "command": "codeleague.persistentChanges.remove",
+          "when": "view == codeleague.persistentChanges && viewItem =~ /^(file|folder)/",
+          "group": "inline@2"
+        },
+        {
+          "command": "codeleague.persistentChanges.open",
+          "when": "view == codeleague.persistentChanges && viewItem =~ /^file/",
+          "group": "1_open@1"
+        },
+        {
+          "command": "codeleague.persistentChanges.openChanges",
+          "when": "view == codeleague.persistentChanges && viewItem =~ /^file\\.dirty/",
+          "group": "1_open@2"
+        },
+        {
+          "command": "codeleague.persistentChanges.revealInExplorer",
+          "when": "view == codeleague.persistentChanges && viewItem =~ /^(file|folder)/",
+          "group": "2_reveal@1"
+        },
+        {
+          "command": "codeleague.persistentChanges.revealInOS",
+          "when": "view == codeleague.persistentChanges && viewItem =~ /^(file|folder)/",
+          "group": "2_reveal@2"
+        },
+        {
+          "command": "codeleague.persistentChanges.copyPath",
+          "when": "view == codeleague.persistentChanges && viewItem =~ /^(file|folder)/",
+          "group": "3_copy@1"
+        },
+        {
+          "command": "codeleague.persistentChanges.copyRelativePath",
+          "when": "view == codeleague.persistentChanges && viewItem =~ /^(file|folder)/",
+          "group": "3_copy@2"
+        },
+        {
+          "command": "codeleague.persistentChanges.remove",
+          "when": "view == codeleague.persistentChanges && viewItem =~ /^(file|folder)/",
+          "group": "4_tracking"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "codeleague.persistentChanges.click",
+          "when": "false"
+        },
+        {
+          "command": "codeleague.persistentChanges.open",
+          "when": "false"
+        },
+        {
+          "command": "codeleague.persistentChanges.openChanges",
+          "when": "false"
+        },
+        {
+          "command": "codeleague.persistentChanges.remove",
+          "when": "false"
+        },
+        {
+          "command": "codeleague.persistentChanges.revealInExplorer",
+          "when": "false"
+        },
+        {
+          "command": "codeleague.persistentChanges.revealInOS",
+          "when": "false"
+        },
+        {
+          "command": "codeleague.persistentChanges.copyPath",
+          "when": "false"
+        },
+        {
+          "command": "codeleague.persistentChanges.copyRelativePath",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "CodeLeague – Persistent Changes",
+      "properties": {
+        "codeleague.persistentChanges.viewMode": {
+          "type": "string",
+          "enum": [
+            "tree",
+            "list"
+          ],
+          "enumDescriptions": [
+            "Group tracked files by folder.",
+            "Show a flat list of tracked files with their folder as description."
+          ],
+          "default": "tree",
+          "description": "How tracked files are displayed."
+        },
+        "codeleague.persistentChanges.openMode": {
+          "type": "string",
+          "enum": [
+            "singleClick",
+            "doubleClick"
+          ],
+          "enumDescriptions": [
+            "Single click opens a preview, double click opens the file permanently (like the Explorer).",
+            "Single click only selects; double click opens the file."
+          ],
+          "default": "singleClick",
+          "description": "How clicking a tracked file opens it."
+        },
+        "codeleague.persistentChanges.confirmReset": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ask for confirmation before Reset Tracking clears the list."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "test": "tsc -p ./ && node --test \"out/test/**/*.test.js\"",
+    "test:integration": "tsc -p ./ && node out/integration/runIntegrationTests.js",
+    "package": "tsc -p ./ && vsce package --no-dependencies --out codeleague-persistent-changes.vsix",
+    "vscode:prepublish": "tsc -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/vscode": "^1.90.0",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^3.2.0",
+    "typescript": "^5.5.0"
+  }
+}

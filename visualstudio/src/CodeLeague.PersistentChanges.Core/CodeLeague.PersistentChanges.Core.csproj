@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <RootNamespace>CodeLeague.PersistentChanges.Core</RootNamespace>
+    <Description>IDE-independent tracking engine of the CodeLeague Persistent Changes extension.</Description>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,12 @@
+# Visual Studio / .NET
+bin/
+obj/
+.vs/
+*.user
+TestResults/
+
+# VS Code extension
+node_modules/
+vscode/out/
+*.vsix
+.vscode-test/
